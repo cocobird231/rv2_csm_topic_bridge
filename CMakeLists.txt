@@ -25,10 +25,11 @@ target_link_libraries(topic_bridge_component
 rclcpp_components_register_node(topic_bridge_component
   PLUGIN "rv2_csm_topic_bridge::TopicBridgeNode"
   EXECUTABLE topic_bridge)
-install(TARGETS topic_bridge_component topic_bridge
+install(TARGETS topic_bridge_component
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
+  LIBRARY DESTINATION lib)
+install(TARGETS topic_bridge
   RUNTIME DESTINATION lib/${PROJECT_NAME})
 install(DIRECTORY include/ DESTINATION include)
 install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
