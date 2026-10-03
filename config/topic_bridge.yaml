@@ -1,47 +1,23 @@
 topic_bridge:
   ros__parameters:
-    # ── CSM / source registration ────────────────────────────────────────────
-    # Name of the target ControlSignalManager server that will receive the
-    # bridged control signals (must match the ControlServer's csm_name or
-    # server_name).
     server_name: control_server
-
-    # Name of this node's own ControlSignalManager instance.
     csm_name: topic_bridge
-
-    # CSM channel name used to identify this source/sink pair.
-    # Must be unique among all sources registered on the target server.
+    master_name: csm_master
+    # Give every bridge a unique controller_name and channel_name.
     channel_name: topic_bridge_control
-
-    # ── Topic configuration ──────────────────────────────────────────────────
-    # ROS 2 topic to subscribe to (required — node stays idle if empty).
-    topic_name: ""
-
-    # Message type of the subscribed topic.
-    # Supported values: "joy"  (sensor_msgs/Joy)
-    #                   "twist" (geometry_msgs/Twist)
-    #                   "string" (std_msgs/String)
+    controller_name: local_xbox
+    topic_name: /joy
+    # joy / twist / string; string is topic-only.
     msg_type: joy
-
-    # CSM transport mode used when registering as a source.
-    # "topic"   — CSM source acts as a ROS publisher; sink subscribes (default).
-    # "service" — CSM source acts as a service client; sink is a service server.
-    #             Not supported for msg_type "string" (no service binding).
     csm_mode: topic
-
-    # ── Source priority & timeouts ───────────────────────────────────────────
-    # CSM arbitration priority (1–100; higher = preferred when multiple sources
-    # are active).  See ControlSignalConst.msg for named constants:
-    #   100 = EMERGENCY_STOP, 80 = HIGH, 50 = MEDIUM, 20 = LOW
-    priority: 50
-
-    # Inactivity timeout in ms.  The CSM marks this source TIMEOUT when no
-    # message is forwarded within this window.
+    # R1 carries generic priorities 1..100; arbitration belongs to the server.
+    priority: 80
     timeout_ms: 2000
-
-    # Time in ms the source may remain in TIMEOUT before the CSM removes it
-    # automatically.  Set to 0 to keep the source registered indefinitely.
+    # Both thresholds measure from the last activity, not from TIMEOUT entry.
+    # 0 disables auto-disconnection; otherwise must exceed timeout_ms.
     disconnect_timeout_ms: 10000
-
-    # Period of the CSM internal status / disconnect check timer (ms).
-    csm_status_timer_interval_ms: 1000
+    csm_status_timer_interval_ms: 100
+    # Local receipt age; old commands are dropped after registration/send waits.
+    input_timeout_ms: 250
+    registration_timeout_ms: 1000
+    registration_retry_ms: 200

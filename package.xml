@@ -3,29 +3,21 @@
 <package format="3">
   <name>rv2_csm_topic_bridge</name>
   <version>0.0.0</version>
-  <description>
-    Bridges an arbitrary ROS 2 topic into the rv2 ControlSignalManager (CSM)
-    as a control signal source. The subscribed topic name, message type, CSM
-    transport mode, and all registration parameters are fully configurable
-    via a YAML file.
-  </description>
+  <description>Bridge fresh ROS Joy, Twist and String messages into R1 control signal transport.</description>
   <maintainer email="cocobird231@gmail.com">coco</maintainer>
   <license>TODO: License declaration</license>
-
   <buildtool_depend>ament_cmake</buildtool_depend>
-
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>std_msgs</depend>
-  <depend>rv2_interfaces</depend>
+  <depend>r1_interfaces</depend>
   <depend>rv2_control_signal_transport</depend>
-
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
-  <export>
-    <build_type>ament_cmake</build_type>
-  </export>
+  <export><build_type>ament_cmake</build_type></export>
 </package>
