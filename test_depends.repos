@@ -1,0 +1,7 @@
+repositories:
+  rv2_control_signal_transport:
+    type: local
+    path: ../rv2_control_signal_transport
+  r1_interfaces:
+    type: local
+    path: ../r1_interfaces
